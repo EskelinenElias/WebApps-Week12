@@ -1,10 +1,10 @@
-import mongoose, { Mongoose } from "mongoose";
+import mongoose, { Mongoose, Connection } from "mongoose";
 
-async function connectToDB(address: string): Promise<Mongoose> {
+async function connectToDB(address: string): Promise<Connection> {
   try {
     // Connect to database
-    return mongoose.connect(address);
-  
+    const db = await mongoose.connect(address);
+    return db.connection; 
   } catch (error) {
     // Log error and throw new database connection error
     console.error(error)

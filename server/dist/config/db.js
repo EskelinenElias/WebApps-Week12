@@ -7,7 +7,8 @@ const mongoose_1 = __importDefault(require("mongoose"));
 async function connectToDB(address) {
     try {
         // Connect to database
-        return mongoose_1.default.connect(address);
+        const db = await mongoose_1.default.connect(address);
+        return db.connection;
     }
     catch (error) {
         // Log error and throw new database connection error
