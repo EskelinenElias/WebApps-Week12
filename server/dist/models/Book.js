@@ -7,5 +7,5 @@ const BookSchema = new mongoose_1.Schema({
     name: { type: String, required: true },
     pages: { type: Number, required: true }
 });
-const Book = (0, mongoose_1.model)("book", BookSchema);
+const Book = (0, mongoose_1.model)("Books", BookSchema);
 exports.Book = Book;
