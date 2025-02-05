@@ -29,8 +29,8 @@ router.post('/book', async (req, res) => {
             return;
         }
         // Add book to the database
-        // const newBook = await Book.create({ name, author, pages });
-        const newBook = new Book_1.Book({ name, author, pages }); // Don't save the book for testing purposes
+        const newBook = await Book_1.Book.create({ name, author, pages });
+        // const newBook = new Book({ name, author, pages }); // Don't save the book for testing purposes
         res.status(200).json({ message: `Book added successfully.`, book: newBook });
     }
     catch (error) {
