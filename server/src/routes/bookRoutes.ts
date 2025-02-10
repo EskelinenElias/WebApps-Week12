@@ -56,4 +56,54 @@ router.post('/book', async (req: Request, res: Response) => {
   }
 });
 
+// GET Route to get a book by name and/or author
+router.get('/book', async (req: Request, res: Response) => {
+  try {
+    // Parse request
+    const name = req.query.name || '';
+    const author = req.query.author || '';
+    
+    // Validate input types
+    if (typeof name !== 'string' || typeof author !== 'string') {
+      console.error("Invalid input types", typeof name, typeof author);
+      res.status(400).json({ error: "Invalid request." });
+      return;
+    }
+    
+    // Construct query
+    let query; 
+    if (name && author) {
+      query = { name: name, author: author }; 
+    } else if (name) {
+      query = { name: name };
+    } else if (author) {
+      query = { author: author };
+    } else {
+      console.error("Invalid input");
+      res.status(400).json({ error: "Invalid request." });
+      return;
+    }
+  
+    // Find a book in the database with the name and/or author
+    const book = await Book.findOne(query);
+    
+    if (!book) {
+      // Respond with not found message
+      console.log("Book not found.")
+      res.status(404).json({ message: "Book not found." });
+      return;
+    }
+    
+    // Return the book
+    res.status(200).json({ message: "Book found.", book: book });
+  } catch(error: any) {
+    
+    // Log error and send failure response
+    console.error("Unknown error: ", error.message);
+    res.status(500).json({ error: "Unknown server error." });
+  }
+  
+}); 
+
+
 export default router;
