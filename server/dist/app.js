@@ -6,8 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
+const dotenv_1 = __importDefault(require("dotenv"));
 const routes_1 = __importDefault(require("./routes"));
 const db_1 = __importDefault(require("./config/db"));
+// Configure environment
+dotenv_1.default.config();
 // Initialize app
 const app = (0, express_1.default)();
 // Add middleware

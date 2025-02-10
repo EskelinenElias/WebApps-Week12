@@ -2,8 +2,12 @@ import express, { Express, Request, Response } from "express";
 import path from "path";
 import morgan from "morgan";
 import cors, { CorsOptions } from 'cors'; 
+import dotenv from 'dotenv';
 import router from "./routes";
 import connectToDB from "./config/db";
+
+// Configure environment
+dotenv.config()
 
 // Initialize app
 const app: Express = express();

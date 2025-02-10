@@ -29,8 +29,17 @@ router.post('/book', async (req, res) => {
             return;
         }
         // Add book to the database
-        const newBook = await Book_1.Book.create({ name, author, pages });
-        // const newBook = new Book({ name, author, pages }); // Don't save the book for testing purposes
+        let newBook;
+        if (process.env.DB_BEHAVIOUR === "don't save") {
+            // Don't save the book for testing purposes
+            newBook = new Book_1.Book({ name, author, pages });
+            console.log("Book was not saved to DB, but code run successfully.");
+        }
+        else {
+            // Save the new book normally
+            newBook = await Book_1.Book.create({ name, author, pages });
+            console.log("Book was saved to DB, and code run successfully.");
+        }
         res.status(200).json({ message: `Book added successfully.`, book: newBook });
     }
     catch (error) {
