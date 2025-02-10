@@ -26,6 +26,12 @@ if (process.env.NODE_ENV === 'development') {
     optionsSuccessStatus: 200
   }
   app.use(cors(corsOptions)); 
+} else if (process.env.NODE_ENV === 'production') {
+  // Serve static files from client/build
+  app.use(express.static(path.resolve('../..', 'client', 'build'))); 
+  app.get('*', (req: Request, res: Response) => {
+    res.sendFile(path.resolve('../..', 'client', 'build', 'index.html'));
+  }); 
 }
 
 // Configure server settings
