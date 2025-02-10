@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const path_1 = __importDefault(require("path"));
 const morgan_1 = __importDefault(require("morgan"));
 const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
@@ -25,6 +26,13 @@ if (process.env.NODE_ENV === 'development') {
         optionsSuccessStatus: 200
     };
     app.use((0, cors_1.default)(corsOptions));
+}
+else if (process.env.NODE_ENV === 'production') {
+    // Serve static files from client/build
+    app.use(express_1.default.static(path_1.default.resolve('../..', 'client', 'build')));
+    app.get('*', (req, res) => {
+        res.sendFile(path_1.default.resolve('../..', 'client', 'build', 'index.html'));
+    });
 }
 // Configure server settings
 const host = "127.0.0.1";
