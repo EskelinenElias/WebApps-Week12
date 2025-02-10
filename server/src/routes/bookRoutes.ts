@@ -105,5 +105,51 @@ router.get('/book', async (req: Request, res: Response) => {
   
 }); 
 
+// GET Route to get all books 
+router.get('/books', async (req: Request, res: Response) => {
+  try {
+    // Parse request
+    const name = req.query.name || '';
+    const author = req.query.author || '';
+    
+    // Validate input types
+    if (typeof name !== 'string' || typeof author !== 'string') {
+      console.error("Invalid input types", typeof name, typeof author);
+      res.status(400).json({ error: "Invalid request." });
+      return;
+    }
+    
+    // Construct filter
+    let filter; 
+    if (name && author) {
+      filter = { name: name, author: author }; 
+    } else if (name) {
+      filter = { name: name };
+    } else if (author) {
+      filter = { author: author };
+    } else {
+      filter = {}
+    }
+  
+    // Find books in the database with the filter
+    const books = await Book.find(filter); 
+    
+    if (!books) {
+      // Respond with not found message
+      console.log("Books not found.")
+      res.status(404).json({ message: "Books not found." });
+      return;
+    }
+    
+    // Return the books
+    res.status(200).json({ message: "Books found.", books: books });
+  } catch(error: any) {
+    
+    // Log error and send failure response
+    console.error("Unknown error: ", error.message);
+    res.status(500).json({ error: "Unknown server error." });
+  }
+  
+}); 
 
 export default router;
