@@ -12,6 +12,6 @@ const BookSchema = new Schema<IBook>({
   pages: { type: Number, required: true }
 });
 
-const Book = model<IBook>("Books", BookSchema);
+const Book = model<IBook>("bkkooks", BookSchema);
 
 export { Book, IBook };
