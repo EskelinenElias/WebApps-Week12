@@ -19,11 +19,11 @@ function BookDetails() {
       try {
         
         // Decode URL encoded book name
-        const decodedBookName = decodeURIComponent(bookName); 
+        // const decodedBookName = decodeURIComponent(bookName); 
         
         // Fetch book by name
-        console.log(`Fetching ${decodedBookName}...`)
-        const response = await fetch(`/api/book?name=${decodedBookName}`); 
+        console.log(`Fetching ${bookName}...`)
+        const response = await fetch(`/api/book?name=${bookName}`); 
         
         if (response.ok) {
           
