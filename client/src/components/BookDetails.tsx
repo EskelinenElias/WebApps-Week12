@@ -55,7 +55,9 @@ function BookDetails() {
   // Book Details Component
   return (
     !book ? (
-      <div>404: This is not the webpage you are looking for</div>
+      <div>
+        <p>404: This is not the webpage you are looking for</p>
+      </div>
     ) : (
       <div>
         <h2>Book Details</h2>
